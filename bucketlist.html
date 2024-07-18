@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>2024년 나만의 신년계획</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="share.css" rel="stylesheet" type="text/css" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&display=swap");
+
+    * {
+      font-family: "Hahmlet", serif;
+    }
+
+    .bg {
+      background-image: url("https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/bucketList/bg-grid.png");
+      background-position: center;
+      background-size: cover;
+      margin: auto;
+      width: 360px;
+    }
+
+    .title {
+      background-color: tomato;
+      border-radius: 10px;
+      color: white;
+      text-align: center;
+      padding: 4px 14px;
+    }
+
+    .bucket {
+      width: 160px;
+      height: 160px;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .img1 {
+      background-image: url('https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/bucketList/bucket-red.png');
+    }
+
+    .img2 {
+      background-image: url('https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/bucketList/bucket-lightred.png');
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .msg {
+      margin: 0;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css"
+    href="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/bucketList/sparta-bucketlist.css" />
+</head>
+
+<body class="bg">
+  <h1 class="title">2024년 신년계획</h1>
+  <p class='msg center'>
+    나 <span id="name" class="name"></span>은/는
+  </p>
+  <p class='msg center'>
+    올해 안에 3가지 이상을 달성하지 못할 경우,
+  </p>
+  <p class='msg center'>
+    친구 3명에게 <span id="present" class="present"></span>을/를 선물하겠습니다.
+  </p>
+
+  <div class="flex-row wrap">
+    <div class="bucket img1 center" id="bucket1"></div>
+    <div class="bucket img2 center" id="bucket2"></div>
+    <div class="bucket img2 center" id="bucket3"></div>
+    <div class="bucket img1 center" id="bucket4"></div>
+    <div class="bucket img1 center" id="bucket5"></div>
+    <div class="bucket img2 center" id="bucket6"></div>
+  </div>
+
+  <footer>
+    <div class="flex-row">
+      <button id="shareButton">공유하기</button>
+      <a href="index.html"><button id="studyButton">계획 수정하기</button></a>
+    </div>
+
+    <script src="share.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const plans = JSON.parse(localStorage.getItem('plans'));
+        if (plans) {
+          plans.forEach((plan, index) => {
+            document.getElementById('bucket' + (index + 1)).textContent = plan;
+          });
+        }
+
+        const name = localStorage.getItem('name');
+        const present = localStorage.getItem('present');
+        if (name) {
+          document.getElementById('name').textContent = name;
+        }
+        if (present) {
+          document.getElementById('present').textContent = present;
+        }
+
+        const buckets = document.querySelectorAll(".bucket");
+        buckets.forEach((bucket, index) => {
+          const isDone = localStorage.getItem("bucket" + index) === "done";
+          if (isDone) {
+            bucket.classList.add("done");
+          }
+        });
+
+        buckets.forEach((bucket, index) => {
+          bucket.addEventListener("click", function () {
+            bucket.classList.toggle("done");
+
+            if (bucket.classList.contains("done")) {
+              localStorage.setItem("bucket" + index, "done");
+            } else {
+              localStorage.setItem("bucket" + index, "");
+            }
+          });
+        });
+      });
+    </script>
+</body>
+
+</html>

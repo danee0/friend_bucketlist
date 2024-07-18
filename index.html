@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>2024년 나만의 신년계획</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="edit.css" rel="stylesheet" type="text/css" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&display=swap");
+
+    * {
+      font-family: "Hahmlet", serif;
+    }
+
+    .bg {
+      background-image: url("https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/bucketList/bg-grid.png");
+      background-position: center;
+      background-size: cover;
+      margin: auto;
+      width: 360px;
+    }
+
+    .title {
+      background-color: tomato;
+      border-radius: 10px;
+      color: white;
+      text-align: center;
+      padding: 4px 14px;
+    }
+
+    .bucket {
+      width: 160px;
+      height: 160px;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .img1 {
+      background-image: url('https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/bucketList/bucket-red.png');
+    }
+
+    .img2 {
+      background-image: url('https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/bucketList/bucket-lightred.png');
+    }
+
+    .input-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .input-form input {
+      margin: 5px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .input-form button {
+      margin: 5px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      background-color: tomato;
+      color: white;
+      cursor: pointer;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      /* Adjust the gap between inputs as needed */
+      margin-bottom: 10px;
+      /* Add margin bottom for spacing */
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      /* Adjust the gap between inputs as needed */
+      margin-bottom: 10px;
+      /* Add margin bottom for spacing */
+    }
+
+    .input-group input {
+      padding: 8px;
+      /* Reduce padding for smaller input */
+      border-radius: 3px;
+      /* Adjust border radius as needed */
+      border: 1px solid #ddd;
+      font-size: 14px;
+      /* Adjust font size as needed */
+      box-sizing: border-box;
+      /* Ensure padding and border are included in width calculation */
+    }
+
+    .input-group input#name {
+      width: 100px;
+      /* Set width to 2/3 of parent width, subtracting 5px for gap */
+    }
+
+    .input-group input#present {
+      width: 175px;
+      /* Adjust width of the present input */
+    }
+  </style>
+  <link rel="stylesheet" type="text/css"
+    href="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/bucketList/sparta-bucketlist.css" />
+</head>
+
+<body class="bg">
+  <h1 class="title">2024년 신년계획</h1>
+  <form class="input-form">
+    <div class="input-group">
+      <input type="text" id="name" placeholder="이름">
+      <input type="text" id="present" placeholder="3가지 이상 못 지킬 시 공약">
+    </div>
+    <input type="text" id="plan1" placeholder="1. 행복하기">
+    <input type="text" id="plan2" placeholder="2. 건강하기">
+    <input type="text" id="plan3" placeholder="3. 하루 물 3컵 이상 마시기">
+    <input type="text" id="plan4" placeholder="4. 매일 일기쓰기">
+    <input type="text" id="plan5" placeholder="5. 5천보 이상 걷기">
+    <input type="text" id="plan6" placeholder="6. 이쁜 말 쓰기">
+    <button type="button" onclick="savePlans()">저장하기</button>
+  </form>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const plans = JSON.parse(localStorage.getItem('plans'));
+      if (plans) {
+        plans.forEach((plan, index) => {
+          document.getElementById('plan' + (index + 1)).value = plan;
+        });
+      }
+
+      const name = localStorage.getItem('name');
+      const present = localStorage.getItem('present');
+      if (name) {
+        document.getElementById('name').value = name;
+      }
+      if (present) {
+        document.getElementById('present').value = present;
+      }
+    });
+
+    function savePlans() {
+      const plans = [];
+      for (let i = 1; i <= 6; i++) {
+        const plan = document.getElementById('plan' + i).value;
+        plans.push(plan);
+      }
+      const name = document.getElementById('name').value;
+      const present = document.getElementById('present').value;
+
+      localStorage.setItem('plans', JSON.stringify(plans));
+      localStorage.setItem('name', name);
+      localStorage.setItem('present', present);
+
+      window.location.href = 'bucketlist.html';
+    }
+  </script>
+</body>
+
+</html>
